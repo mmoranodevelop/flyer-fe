@@ -57,8 +57,10 @@ export const fetchFavoritesFlyers = () => (dispatch) => {
     let result = localStorage.getItem("favoritesFlyers");
     if (!result || result === "undefined") {
         result = [];
+        dispatch(favoritesFlyers(result));
+    } else {
+        dispatch(favoritesFlyers(JSON.parse(result)));
     }
-    dispatch(favoritesFlyers(JSON.parse(result)));
 }
 
 export const addFlyerOnFavorites = (flyer) => (dispatch) => {
