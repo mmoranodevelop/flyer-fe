@@ -1,6 +1,5 @@
 import * as Api from '../../api/flyers-api';
 import * as ActionTypes from '../actions/ActionsTypes';
-import {getFavoritesFlyers} from "../../api/flyers-api";
 
 export const fetchFlyers = () => (dispatch) => {
 
@@ -63,13 +62,22 @@ export const fetchFavoritesFlyers = () => (dispatch) => {
 }
 
 export const addFlyerOnFavorites = (flyer) => (dispatch) => {
+    debugger;
     let existingFlyers = localStorage.getItem("favoritesFlyers");
-    if(!existingFlyers || existingFlyers === "undefined") {
+    let indexElemToRemove = null;
+    if (!existingFlyers || existingFlyers === "undefined") {
         existingFlyers = [];
     } else {
         existingFlyers = JSON.parse(existingFlyers);
     }
-    existingFlyers.some(elem => elem.id === flyer.id) ? existingFlyers.splice(existingFlyers.indexOf(flyer), 1) : existingFlyers.push(flyer);
+    existingFlyers.some((elem, index) => {
+        if (elem.id === flyer.id) {
+            indexElemToRemove = index;
+            return true;
+        } else {
+            return false;
+        }}) ? existingFlyers.splice(indexElemToRemove, 1) : existingFlyers.push(flyer);
+
     localStorage.setItem("favoritesFlyers", JSON.stringify(existingFlyers));
     dispatch(favoritesFlyers(existingFlyers));
 }

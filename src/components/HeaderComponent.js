@@ -13,21 +13,26 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import List from '@material-ui/core/List';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import FavoriteIcon from "@material-ui/icons/Favorite";
+
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
+
     root: {
         display: 'flex',
+    },
+    primary: {
+            backgroundColor: '#9c27b0',
     },
     appBar: {
         transition: theme.transitions.create(['margin', 'width'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
+
     },
     appBarShift: {
         width: `calc(100% - ${drawerWidth}px)`,
@@ -76,11 +81,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const DisplayFavoriteFlyer = ({flyer}) => {
+const DisplayFavoriteFlyer = ({flyer, onDislike}) => {
     return (
         <ListItem key={flyer.id}>
+            <IconButton onClick={() => onDislike(flyer)}><FavoriteIcon className="favoriteColor" /></IconButton>
             <ListItemText primary={flyer.title} />
-            <IconButton><FavoriteIcon className="favoriteColor"/></IconButton>
         </ListItem>
     );
 }
@@ -102,7 +107,7 @@ const Header = (props) => {
     if (props.favoritesFlayers && props.favoritesFlayers.length > 0) {
         favoritesFlyer = props.favoritesFlayers.map(flyer => {
             return (
-                <DisplayFavoriteFlyer flyer={flyer} />
+                <DisplayFavoriteFlyer flyer={flyer} onDislike={props.removeFlyerOnFavorites} />
             )
         });
     } else {
@@ -119,10 +124,9 @@ const Header = (props) => {
                 <CssBaseline/>
                 <AppBar
                     position="fixed"
-                    color="secondary"
                     className={clsx(classes.appBar, {
                         [classes.appBarShift]: open,
-                    })}
+                    }, classes.primary)}
                 >
                     <Toolbar>
                         <IconButton

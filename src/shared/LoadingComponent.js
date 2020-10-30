@@ -1,10 +1,19 @@
 import React from 'react';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    backdrop: {
+        color: '#9c27b0',
+    },
+}));
 
 export const Loading = () => {
+    const classes = useStyles();
     return(
-        <div className="col-12">
-            <span className="fa fa-spinner fa-pulse fa-3x fa-fw text-primary"/>
-            <p>Loading . . .</p>
-        </div>
+        <Backdrop open={true}>
+            <CircularProgress  className={classes.backdrop} />
+        </Backdrop>
     );
 };

@@ -46,7 +46,8 @@ class Main extends Component {
         return (
             <div>
                 <div>
-                    <Header favoritesFlayers={this.props.favoritesFlyers.favoritesFlyers} isLoading={this.props.favoritesFlyers.isLoading}/>
+                    <Header favoritesFlayers={this.props.favoritesFlyers.favoritesFlyers} isLoading={this.props.favoritesFlyers.isLoading}
+                            removeFlyerOnFavorites={this.props.addFlyerOnFavorites}/>
                 </div>
                 <div className="container-fluid" id="content">
                     <Home
