@@ -1,7 +1,7 @@
 import React from 'react';
 import {Loading} from '../shared/LoadingComponent';
 import {FadeTransform} from 'react-animation-components';
-import {CardSubtitle, Col} from 'reactstrap';
+import {CardSubtitle} from 'reactstrap';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -73,7 +73,7 @@ function RenderFlyerCard({flyer, isLoading, errMess, isFavorite, onLike}) {
                     </CardContent>
                     <CardActions disableSpacing>
                         <IconButton aria-label="add to favorites" onClick={() => onLike(flyer)}>
-                            <FavoriteIcon className={isFavorite ? 'favoriteColor': ''}/>
+                            <FavoriteIcon className={isFavorite ? 'favoriteColor' : ''}/>
                         </IconButton>
                     </CardActions>
                 </Card>
@@ -89,6 +89,13 @@ class Home extends React.Component {
         this.saveFavorite = this.saveFavorite.bind(this)
     }
 
+    handleScroll = (event) => {
+        const element = event.target;
+        if (element.scrollHeight - element.scrollTop === element.clientHeight) {
+            this.props.loadMoreFlyers();
+        }
+    };
+
     saveFavorite(flyer) {
         this.props.addFlyerOnFavorites(flyer);
     }
@@ -98,41 +105,32 @@ class Home extends React.Component {
         if (this.props.flyers) {
             flyers = this.props.flyers.map((flyer) => {
                 let isFavorite;
-                if(this.props.favoritesFlayers && this.props.favoritesFlayers.length > 0) {
+                if (this.props.favoritesFlayers && this.props.favoritesFlayers.length > 0) {
                     isFavorite = this.props.favoritesFlayers.some(src => src.id === flyer.id);
                 }
                 return (
-                    <Col md="3" key={flyer.id}>
+                    <div className="col-6 col-sm-3 col-md-2" key={flyer.id}>
                         <RenderFlyerCard flyer={flyer} isFavorite={isFavorite} onLike={this.saveFavorite}/>
-                    </Col>
+                    </div>
                 );
             });
         }
-
         if (this.props.flyersLoading) {
             return (
-                <div className="container">
-                    <div className="row">
-                        <Loading/>
-                    </div>
-                </div>
+                <Loading/>
             );
         } else if (this.props.flyerErrMess) {
             return (
-                <div className="container">
-                    <div className="row">
-                        <div className="col-12">
-                            <h4>{this.props.flyerErrMess}</h4>
-                        </div>
+                <div className="row">
+                    <div className="col-12">
+                        <h4>{this.props.flyerErrMess}</h4>
                     </div>
                 </div>
             );
         } else {
             return (
-                <div className="container mt-10">
-                    <div className="row">
-                        {flyers}
-                    </div>
+                <div className="row mt-10" onScroll={this.handleScroll} style={{height: "900px", overflow: "auto"}}>
+                    {flyers}
                 </div>
             );
         }

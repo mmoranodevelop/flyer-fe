@@ -1,11 +1,11 @@
 import * as Api from '../../api/flyers-api';
 import * as ActionTypes from '../actions/ActionsTypes';
 
-export const fetchFlyers = () => (dispatch) => {
+export const fetchFlyers = (page: number) => (dispatch) => {
 
     dispatch(flyersLoading(true));
 
-    return Api.getFlyers()
+    return Api.getFlyers(page)
         .then(response => {
                 if (response) {
                     return response;
@@ -64,7 +64,6 @@ export const fetchFavoritesFlyers = () => (dispatch) => {
 }
 
 export const addFlyerOnFavorites = (flyer) => (dispatch) => {
-    debugger;
     let existingFlyers = localStorage.getItem("favoritesFlyers");
     let indexElemToRemove = null;
     if (!existingFlyers || existingFlyers === "undefined") {

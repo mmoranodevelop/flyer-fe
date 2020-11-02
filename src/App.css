@@ -1,52 +1,61 @@
-.row-header{
-  margin:0px auto;
-  padding:0px auto;
+.row-header {
+    margin: 0px auto;
+    padding: 0px auto;
 }
 
 .row-content {
-  margin:0px auto;
-  padding: 50px 0px 50px 0px;
-  border-bottom: 1px ridge;
-  min-height:400px;
+    margin: 0px auto;
+    padding: 50px 0px 50px 0px;
+    border-bottom: 1px ridge;
+    min-height: 400px;
 }
 
 
-address{
-  font-size:80%;
-  margin:0px;
-  color:#0f0f0f;
+address {
+    font-size: 80%;
+    margin: 0px;
+    color: #0f0f0f;
 }
 
 .navbar-dark {
-  background-color: #512DA8;
+    background-color: #512DA8;
 }
 
 .page-enter {
-  opacity: 0.01;
-  transform: translateX(-100%);
+    opacity: 0.01;
+    transform: translateX(-100%);
 }
 
 .page-enter-active {
-  opacity: 1;
-  transform: translateX(0%);
-  transition: all 300ms ease-in;
+    opacity: 1;
+    transform: translateX(0%);
+    transition: all 300ms ease-in;
 }
 
 .page-exit {
-  opacity: 1;
-  transform: translateX(0%);
+    opacity: 1;
+    transform: translateX(0%);
 }
 
 .page-exit-active {
-  opacity: 0.01;
-  transform: translateX(100%);
-  transition: all 300ms ease-out;
+    opacity: 0.01;
+    transform: translateX(100%);
+    transition: all 300ms ease-out;
 }
 
 #content {
-  padding-top: 85px;
+    padding-top: 85px;
 }
 
 .favoriteColor {
-  color: #af52bf;
+    color: #af52bf;
+}
+
+.card {
+    max-height: 285px;
+    text-overflow: ellipsis;
+}
+
+.text-overflow {
+    text-overflow: ellipsis;
 }

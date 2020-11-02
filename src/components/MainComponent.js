@@ -14,8 +14,8 @@ const mapStateToProps = state => {
 
 //LAST ASSIGNMENT
 const mapDispatchToProps = dispatch => ({
-    fetchFlayers: () => {
-        dispatch(fetchFlyers());
+    fetchFlayers: (page: number) => {
+        dispatch(fetchFlyers(page));
     },
     fetchFavoritesFlyers: () => {
         dispatch(fetchFavoritesFlyers())
@@ -30,12 +30,23 @@ class Main extends Component {
 
     constructor(props) {
         super(props);
+        this.loadNextPage = this.loadNextPage.bind(this);
+        this.state = {
+            flyersPage: 1,
+        };
     }
 
     //LAST ASSIGNMENT
     componentDidMount() {
-        this.props.fetchFlayers();
+        this.props.fetchFlayers(this.state.flyersPage);
         this.props.fetchFavoritesFlyers();
+    }
+
+    loadNextPage() {
+        this.setState({
+            flyersPage: this.state.flyersPage + 1
+        });
+        this.props.fetchFlayers(this.state.flyersPage);
     }
 
 
@@ -56,6 +67,7 @@ class Main extends Component {
                         flyerErrMess={this.props.flyers.errMess}
                         favoritesFlayers={this.props.favoritesFlyers.favoritesFlyers}
                         addFlyerOnFavorites={this.props.addFlyerOnFavorites}
+                        loadMoreFlyers={this.loadNextPage}
                     />
                 </div>
             </div>
