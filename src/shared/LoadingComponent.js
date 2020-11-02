@@ -17,3 +17,13 @@ export const Loading = () => {
         </Backdrop>
     );
 };
+
+export const AppSpinner = (props) => {
+    const classes = useStyles();
+    if (props.show) {
+        return(
+            <CircularProgress  className={classes.backdrop} />
+        );
+    }
+    return null;
+}

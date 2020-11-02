@@ -3,7 +3,11 @@ import * as ActionTypes from '../actions/ActionsTypes';
 
 export const fetchFlyers = (page: number) => (dispatch) => {
 
-    dispatch(flyersLoading(true));
+    if(page === 1) {
+        dispatch(flyersLoading(true));
+    } else {
+        dispatch(flyersLoadingMore(true))
+    }
 
     return Api.getFlyers(page)
         .then(response => {
@@ -24,6 +28,10 @@ export const fetchFlyers = (page: number) => (dispatch) => {
 
 export const flyersLoading = () => ({
     type: ActionTypes.FLYERS_LOADING
+});
+
+export const flyersLoadingMore = () => ({
+    type: ActionTypes.FLYERS_LOADING_MORE
 });
 
 export const flyersFailed = (errmess) => ({

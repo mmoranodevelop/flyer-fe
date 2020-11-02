@@ -152,12 +152,12 @@ const Header = (props) => {
                     }}
                 >
                     <div className={classes.drawerHeader}>
+                        <span className="h4 font-weight-bold drawer-header-title">Favorites</span>
                         <IconButton onClick={handleDrawerClose}>
                             {theme.direction === 'ltr' ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
                         </IconButton>
                     </div>
-                    <span> Favorites</span>
-                    <span> The list of your favorites flyers</span>
+                    <span className="ml-3 font-weight-bold"> The list of your favorites flyers</span>
                     <Divider/>
                     <List>
                     {favoritesFlyer}

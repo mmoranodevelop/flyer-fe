@@ -1,5 +1,5 @@
 import React from 'react';
-import {Loading} from '../shared/LoadingComponent';
+import {AppSpinner, Loading} from '../shared/LoadingComponent';
 import {FadeTransform} from 'react-animation-components';
 import {CardSubtitle} from 'reactstrap';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
@@ -62,14 +62,18 @@ function RenderFlyerCard({flyer, isLoading, errMess, isFavorite, onLike}) {
                         className={classes.media}
                         image="http://placehold.it/130?text=No-image"
                     />
-                    <CardHeader
+                    <CardHeader className="mt-3"
                         title={flyer.retailer}
-                        subheader={flyer.title ? <CardSubtitle>{flyer.title}</CardSubtitle> : null}
+                        subheader={flyer.title ?
+                            <span className="h5 font-weight-bold overflow-auto truncate mt-5">
+                                {flyer.title}
+                            </span>
+                            : null}
                     />
                     <CardContent>
-                        <Typography variant="body2" color="textSecondary" component="p">
+                        <span className="h5 font-weight-bold truncate">
                             {flyer.category}
-                        </Typography>
+                        </span>
                     </CardContent>
                     <CardActions disableSpacing>
                         <IconButton aria-label="add to favorites" onClick={() => onLike(flyer)}>
@@ -84,17 +88,11 @@ function RenderFlyerCard({flyer, isLoading, errMess, isFavorite, onLike}) {
 
 class Home extends React.Component {
 
+
     constructor(props) {
         super(props)
         this.saveFavorite = this.saveFavorite.bind(this)
     }
-
-    handleScroll = (event) => {
-        const element = event.target;
-        if (element.scrollHeight - element.scrollTop === element.clientHeight) {
-            this.props.loadMoreFlyers();
-        }
-    };
 
     saveFavorite(flyer) {
         this.props.addFlyerOnFavorites(flyer);
@@ -109,7 +107,7 @@ class Home extends React.Component {
                     isFavorite = this.props.favoritesFlayers.some(src => src.id === flyer.id);
                 }
                 return (
-                    <div className="col-6 col-sm-3 col-md-2" key={flyer.id}>
+                    <div className="col-6 col-sm-3 col-md-3" key={flyer.id}>
                         <RenderFlyerCard flyer={flyer} isFavorite={isFavorite} onLike={this.saveFavorite}/>
                     </div>
                 );
@@ -129,9 +127,15 @@ class Home extends React.Component {
             );
         } else {
             return (
-                <div className="row mt-10" onScroll={this.handleScroll} style={{height: "900px", overflow: "auto"}}>
-                    {flyers}
+                <div>
+                    <div className="row mt-10">
+                        {flyers}
+                    </div>
+                    <div className="row mt-2 justify-content-center">
+                        <AppSpinner show={this.props.flyersLoadingMore}/>
+                    </div>
                 </div>
+
             );
         }
     }
